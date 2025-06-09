@@ -1,12 +1,12 @@
-# === Stage 1: Build the application using Maven ===
-FROM maven:3.9.6-eclipse-temurin-21 AS builder
+# Use Maven with OpenJDK 21 for the build stage
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# === Stage 2: Create the runtime image ===
-FROM openjdk:21-slim
+# Use OpenJDK 21 for the runtime stage
+FROM openjdk:21
 WORKDIR /app
-COPY --from=builder /app/target/*.jar app.jar
+COPY --from=build /app/target/pocket-0.0.1-SNAPSHOT.jar pocket.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["sh", "-c", "java -jar pocket.jar --server.port=${PORT:-8080}"]

@@ -79,8 +79,12 @@ public class UserController {
     }
 
     @PutMapping("/updatePassword")
-    public UpdateUser updateUserPassword(@RequestBody UpdateUser user) {
-        return service.updatePassword(user);
+    public ResponseEntity<?> updateUserPassword(@RequestBody UpdateUser user) {
+        UpdateUser updatedUser = service.updatePassword(user);
+        if (updatedUser != null) {
+            return ResponseEntity.ok(updatedUser);
+        }
+        return ResponseEntity.badRequest().body("Bad Request.");
     }
 
     @DeleteMapping("/delete/{token}")
@@ -94,8 +98,12 @@ public class UserController {
     }
 
     @PutMapping("/updateProfile")
-    public UserDetail updateProfile(@RequestBody UserDetail user) {
-        return service.updateUser(user);
+    public ResponseEntity<?> updateProfile(@RequestBody UserDetail user) {
+        UserDetail userDetail = service.updateUser(user);
+        if (userDetail != null) {
+            return ResponseEntity.ok(userDetail);
+        }
+        return ResponseEntity.badRequest().body("Bad Request.");
     }
 
     @PutMapping("/send-otp")

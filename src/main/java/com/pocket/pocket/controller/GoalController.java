@@ -1,6 +1,7 @@
 package com.pocket.pocket.controller;
 
 import com.pocket.pocket.model.Goals;
+import com.pocket.pocket.model.SavingGoal;
 import com.pocket.pocket.service.GoalsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class GoalController {
     }
 
     @PutMapping("/goal")
-    public Goals updateGoals(@RequestBody Goals goal) {
+    public Goals updateGoals(@RequestBody SavingGoal goal) {
         return goalsService.updateGoal(goal);
     }
 
@@ -32,4 +33,6 @@ public class GoalController {
     public void deleteGoals(@PathVariable int id) {
         goalsService.deleteGoal(id);
     }
+
+
 }

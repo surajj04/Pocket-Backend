@@ -18,12 +18,21 @@ public class SavingsService {
     public Savings updateSavings(double savings, int userId) {
         Savings s1 = savingsRepository.findByUserId(userId);
         if (s1 != null) {
-            s1.setSavings(savings);
+            s1.setSavings(s1.getSavings() + savings);
             return s1;
         }
         Savings s2 = new Savings();
         s2.setSavings(savings);
         s2.setUserId(userId);
         return savingsRepository.save(s2);
+    }
+
+    public Savings debitSaving(double savings, int userId) {
+        Savings s1 = savingsRepository.findByUserId(userId);
+        if (s1 != null) {
+            s1.setSavings(s1.getSavings() - savings);
+            return savingsRepository.save(s1);
+        }
+        return null;
     }
 }

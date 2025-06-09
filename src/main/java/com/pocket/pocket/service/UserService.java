@@ -251,17 +251,21 @@ public class UserService {
 
     public UserDetail updateUser(UserDetail user) {
         User temp = userRepo.findById(user.getUserId()).orElse(new User());
-        temp.setName(user.getName());
-        temp.setGender(user.getGender());
-        temp.setDob(user.getDob());
-        temp.setEmail(user.getEmail());
-        temp.setPhoneNo(user.getPhoneNo());
-        temp.setCountry(user.getCountry());
-        temp.setState(user.getState());
-        temp.setCity(user.getCity());
-        userRepo.save(temp);
+        if (temp != null) {
 
-        return user;
+            temp.setName(user.getName());
+            temp.setGender(user.getGender());
+            temp.setDob(user.getDob());
+            temp.setEmail(user.getEmail());
+            temp.setPhoneNo(user.getPhoneNo());
+            temp.setCountry(user.getCountry());
+            temp.setState(user.getState());
+            temp.setCity(user.getCity());
+            userRepo.save(temp);
+
+            return user;
+        }
+        return null;
     }
 
     public int getUserIdByPhoneNo(String phoneNo) {
